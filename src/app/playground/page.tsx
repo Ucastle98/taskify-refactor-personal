@@ -8,7 +8,6 @@ import CountChip from '@/components/chip/countchip/CountChip';
 import StateChipList from '@/components/chip/statechip/StateChipList';
 import ChipInput from '@/components/chip/textchip/ChipInput';
 import SideMenu from '@/components/sidemenu/SideMenu';
-import PagiNation from '@/components/pagenation/PagiNation';
 
 const handleClick = () => {};
 
@@ -22,7 +21,7 @@ export default function PlaygroundPage() {
   return (
     <div className="flex min-h-screen">
       {/* 왼쪽 사이드 */}
-      <aside className="max-w-[260px] h-screen shrink-0 border-r border-r-gray-200 p-4">
+      <aside className="w-[260px] h-screen shrink-0 border-r border-r-gray-200 p-4">
         <SideMenu />
       </aside>
 

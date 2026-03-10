@@ -1,4 +1,5 @@
 // PageNation.tsx
+import { useEffect, useRef, useState } from 'react';
 import AngleBrackets from '../icons/AngleBrackets';
 import usePageToast from '../toast/pagetoast/usePageToast';
 
@@ -15,10 +16,23 @@ export default function PagiNation({
   onPageChange,
   className = '',
 }: PagiNationProps) {
-  const isPrevDisabled = page <= 1;
-  const isNextDisabled = page >= totalPages;
+  // const isPrevDisabled = page <= 1;
+  // const isNextDisabled = page >= totalPages;
 
   const { showToast, Toast } = usePageToast();
+
+  const prevPageRef = useRef(page);
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
+
+  useEffect(() => {
+    if (page > prevPageRef.current) {
+      setDirection('next');
+    } else if (page < prevPageRef.current) {
+      setDirection('prev');
+    }
+
+    prevPageRef.current = page;
+  }, [page]);
 
   const goPrev = () => {
     if (page <= 1) {
@@ -48,8 +62,13 @@ export default function PagiNation({
           <AngleBrackets direction="left" />
         </button>
 
-        <div className="flex-1 flex items-center justify-center border-r border-gray-300 text-sm font-medium">
-          {page}
+        <div className="flex-1 flex items-center justify-center border-r border-gray-300 text-sm font-medium overflow-hidden h-full">
+          <span
+            key={page}
+            className={direction === 'next' ? 'animate-page-next' : 'animate-page-prev'}
+          >
+            {page}
+          </span>
         </div>
 
         <button
@@ -67,5 +86,4 @@ export default function PagiNation({
   );
 }
 
-// TODO: 추후 페이지 number 추가 마지막 페이지에서 넘길시 토스트 추가
-// TODO2: showToast에서 setTimeout이 계속 누적될 수 있어서, 빠르게 여러번 누르면 에러 발생 timeout 관리하기
+// TODO: showToast에서 setTimeout이 계속 누적될 수 있어서, 빠르게 여러번 누르면 에러 발생 timeout 관리하기

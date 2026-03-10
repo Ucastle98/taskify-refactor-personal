@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "./variable.css";
+@import 'tailwindcss';
+@import './variable.css';
 
 @theme inline {
   --color-bg-tw: var(--color-bg);
@@ -11,6 +11,42 @@
   --color-primary-soft-tw: var(--color-primary-soft);
   --color-danger-tw: var(--color-danger);
   --color-success-tw: var(--color-success);
+}
+
+@keyframes page-next {
+  0% {
+    opacity: 0;
+    transform: translateX(10px) scale(0.96);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes page-prev {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.96);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.animate-page-next {
+  animation: page-next 0.25s ease-out;
+}
+
+.animate-page-prev {
+  animation: page-prev 0.25s ease-out;
 }
 
 body {

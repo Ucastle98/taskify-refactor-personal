@@ -28,6 +28,7 @@ export interface UseInfiniteScrollOptions<Item> {
 export interface UseInfiniteScrollResult<Item> {
   items: Item[];
   isLoading: boolean;
+  error: Error | null;
   hasMore: boolean;
   sentinelRef: RefObject<HTMLDivElement | null>;
   loadMore: () => Promise<void>;
@@ -45,6 +46,7 @@ export const useInfiniteScroll = <Item>({
 }: UseInfiniteScrollOptions<Item>): UseInfiniteScrollResult<Item> => {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const [hasMore, setHasMore] = useState(true);
 
   // 리스트의 끝을 감지하기 위한 sentinel element
@@ -76,6 +78,7 @@ export const useInfiniteScroll = <Item>({
 
     isFetchingRef.current = true;
     setIsLoading(true);
+    setError(null);
 
     try {
       // fetchPage:
@@ -89,8 +92,10 @@ export const useInfiniteScroll = <Item>({
       nextCursorRef.current = page.nextCursor;
       // 다음 페이지가 있다면 hasMore true
       setHasMore(page.nextCursor !== null);
-    } catch {
-      throw Error('Failed to load more data.');
+    } catch (unknownError) {
+      const normalizedError =
+        unknownError instanceof Error ? unknownError : new Error('Failed to load more data.');
+      setError(normalizedError);
     } finally {
       isFetchingRef.current = false;
       setIsLoading(false);
@@ -146,6 +151,7 @@ export const useInfiniteScroll = <Item>({
   // 데이터를 다시 불러와야 할 때, 초기화
   const reset = useCallback(() => {
     setItems([]);
+    setError(null);
     setHasMore(true);
     setIsLoading(false);
 
@@ -157,6 +163,7 @@ export const useInfiniteScroll = <Item>({
   return {
     items,
     isLoading,
+    error,
     hasMore,
     sentinelRef,
     loadMore,

@@ -2,9 +2,9 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 
-import useOutsideClick from '../hooks/useOutsideClick';
-import { cn } from '../lib/cn';
-import { INPUT_BASE, type InputSelectProps, padIfLeftIcon, padIfRightIcon } from './input';
+import useOutsideClick from '@/hooks/useOutsideClick';
+import { cn } from '@/lib/cn';
+import { INPUT_BASE, type InputSelectProps, padIfLeftIcon, padIfRightIcon } from './Input';
 
 export default function SelectInput(props: InputSelectProps) {
   const {

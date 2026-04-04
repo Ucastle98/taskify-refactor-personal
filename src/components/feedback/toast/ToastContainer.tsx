@@ -3,10 +3,10 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-import errorImage from '@/components/toast/assets/error.svg';
-import successImage from '@/components/toast/assets/success.svg';
-import warningImage from '@/components/toast/assets/warning.svg';
-import type { ToastEventType, ToastType } from '@/components/toast/type';
+import errorImage from '@/components/feedback/toast/assets/error.svg';
+import successImage from '@/components/feedback/toast/assets/success.svg';
+import warningImage from '@/components/feedback/toast/assets/warning.svg';
+import type { ToastEventType, ToastType } from '@/components/feedback/toast/type';
 
 export const toast = ({ message, eventType }: ToastType) => {
   const event = new CustomEvent('showToast', {

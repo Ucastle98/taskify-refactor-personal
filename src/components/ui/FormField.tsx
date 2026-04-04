@@ -10,7 +10,7 @@ import {
 } from 'react-hook-form';
 
 import Field from './Field';
-import Input, { type InputSelectProps, type InputTextProps, type TextareaProps } from './input';
+import Input, { type InputSelectProps, type InputTextProps, type TextareaProps } from './Input';
 
 type CommonProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;

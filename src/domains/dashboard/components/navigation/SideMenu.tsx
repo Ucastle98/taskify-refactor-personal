@@ -1,7 +1,8 @@
 // SideMenu.tsx
 
 import Link from 'next/link';
-import PlusMark from '../icons/PlusMark';
+
+import PlusMark from '@/components/icons/PlusMark';
 
 export default function SideMenu() {
   return (

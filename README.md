@@ -38,3 +38,16 @@ npm run dev
 - 커밋 전 `npm run lint:fix` 실행 필수
 - 전역 스타일은 `src/app/layout.tsx`에서만 import
 - 디자인 값 수정은 `src/styles/variable.css`에서만 관리
+
+---
+
+## Structure
+
+현재 프로젝트는 `app + shared + domains` 구조를 기준으로 정리합니다.
+
+- `src/app`: Next.js 라우트 엔트리
+- `src/components`: 공용 UI
+- `src/hooks`, `src/lib`, `src/assets`, `src/styles`: 공용 자산
+- `src/domains`: 도메인 전용 코드
+
+자세한 기준과 예시는 [docs/project-structure.md](./docs/project-structure.md)에서 확인할 수 있습니다.

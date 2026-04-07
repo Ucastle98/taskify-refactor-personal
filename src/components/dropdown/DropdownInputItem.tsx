@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import Image from 'next/image';
 
-import checkItem from '@/components/dropdown/assets/check-item.svg';
+import CheckItemIcon from '@/components/dropdown/assets/check-item.svg';
 
 import { useDropdownContext } from './Dropdown';
 
@@ -32,7 +31,7 @@ export const DropdownInputItem = ({
         <div className="mx-4 my-2">
           <div className="flex items-center gap-2">
             <div className="w-[22px] h-[22px] shrink-0">
-              {isSelected && <Image src={checkItem} alt="선택됨" />}
+              {isSelected && <CheckItemIcon className="h-full w-full" aria-hidden="true" />}
             </div>
             {children}
           </div>

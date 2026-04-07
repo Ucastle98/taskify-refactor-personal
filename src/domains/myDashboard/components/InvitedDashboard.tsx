@@ -1,4 +1,4 @@
-import NothingInvitedDashboard from '@/domains/myDashboard/assets/nothingInvitedDashboard.svg';
+import NothingInvitedDashboard from '@/assets/icons/nothingInvitedDashboard.svg';
 import { cn } from '@/lib/cn';
 
 interface InvitedDashboardProps {

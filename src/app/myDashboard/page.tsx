@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/ui/Button';
-import InvitedDashboard from '@/domains/myDashboard/components/InvitedDashboard';
+import InvitedDashboard from '@/domains/myDashboard/components/InvitedDashboardList';
 import MyDashboardButton from '@/domains/myDashboard/components/MyDashboardButton';
 
 export default function Page() {

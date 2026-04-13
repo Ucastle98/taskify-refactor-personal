@@ -1,4 +1,4 @@
-import { ToastContainer } from '@/components/toast/ToastContainer';
+import { ToastContainer } from '@/components/feedback/toast/ToastContainer';
 
 import '@/styles/globals.css';
 

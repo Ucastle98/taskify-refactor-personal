@@ -1,12 +1,11 @@
 // SideMenu.tsx
 
 import Link from 'next/link';
-import PlusMark from '../icons/PlusMark';
-import { useState } from 'react';
-import PagiNation from '../pagenation/PagiNation';
+
+import PlusMark from '@/components/icons/PlusMark';
 
 export default function SideMenu() {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const totalPages = 10; // 임시 추후 API 확인 또는 팀원 상의
 
   return (
@@ -30,7 +29,7 @@ export default function SideMenu() {
       <div className="mt-4 flex-1 overflow-y-auto">{/* DashboardList(추후 추가) */}</div>
 
       <div className="mt-4">
-        <PagiNation page={page} totalPages={totalPages} onPageChange={setPage} />
+        {/* <PagiNation page={page} totalPages={totalPages} onPageChange={setPage} /> */}
       </div>
     </div>
   );

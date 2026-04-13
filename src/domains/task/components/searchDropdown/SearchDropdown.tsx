@@ -1,10 +1,10 @@
 import { type ReactNode, useCallback, useState } from 'react';
 
-import { SearchDropdownTrigger } from '@/components/searchDropdown/SearchDropdownTrigger';
-import { SearchDropdownUserItem } from '@/components/searchDropdown/SearchDropdownUserItem';
-import { SearchDropdownUserList } from '@/components/searchDropdown/SearchDropdownUserList';
-import type { User } from '@/components/searchDropdown/useSearchDropdownContext';
-import { SearchDropdownContext } from '@/components/searchDropdown/useSearchDropdownContext';
+import { SearchDropdownTrigger } from '@/domains/task/components/searchDropdown/SearchDropdownTrigger';
+import { SearchDropdownUserItem } from '@/domains/task/components/searchDropdown/SearchDropdownUserItem';
+import { SearchDropdownUserList } from '@/domains/task/components/searchDropdown/SearchDropdownUserList';
+import type { User } from '@/domains/task/components/searchDropdown/useSearchDropdownContext';
+import { SearchDropdownContext } from '@/domains/task/components/searchDropdown/useSearchDropdownContext';
 import { useDropdownClose } from '@/hooks/useDropdownClose';
 
 interface SearchDropdownProps {

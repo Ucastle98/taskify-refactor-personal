@@ -1,10 +1,10 @@
 // ChipInput.tsx
-"use client";
+'use client';
 
-import type { KeyboardEvent } from "react";
-import { useState } from "react";
+import type { KeyboardEvent } from 'react';
+import { useState } from 'react';
 
-import Chip from "./Chip";
+import Chip from './Chip';
 
 interface ChipInputProps {
   value: string[];
@@ -13,7 +13,7 @@ interface ChipInputProps {
 }
 
 export default function ChipInput({ value, onChange, placeholder }: ChipInputProps) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const addChip = (text: string) => {
     const trimmed = text.trim();
@@ -22,16 +22,16 @@ export default function ChipInput({ value, onChange, placeholder }: ChipInputPro
     if (value.includes(trimmed)) return;
 
     onChange([...value, trimmed]);
-    setInput("");
+    setInput('');
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" || e.key === ",") {
+    if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
       addChip(input);
     }
 
-    if (e.key === "Backspace" && input === "" && value.length > 0) {
+    if (e.key === 'Backspace' && input === '' && value.length > 0) {
       e.preventDefault();
       onChange(value.slice(0, -1));
     }
@@ -51,7 +51,7 @@ export default function ChipInput({ value, onChange, placeholder }: ChipInputPro
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={placeholder ?? "입력 후 Enter"}
+        placeholder={placeholder ?? '입력 후 Enter'}
       />
     </div>
   );

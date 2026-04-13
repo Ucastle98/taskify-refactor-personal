@@ -6,9 +6,9 @@ interface ChipProps {
   onRemove: () => void;
 }
 
-const CHIP_BG_COLORS = ["#F9EEE3", "#E7F7D8", "#F7D8F0", "#DBE6F7"];
+const CHIP_BG_COLORS = ['#F9EEE3', '#E7F7D8', '#F7D8F0', '#DBE6F7'];
 
-const CHIP_TEXT_COLORS = ["#D58D49", "#86D549", "#D549B6", "#4981D5"];
+const CHIP_TEXT_COLORS = ['#D58D49', '#86D549', '#D549B6', '#4981D5'];
 
 export default function Chip({ label, onRemove, colorIndex }: ChipProps) {
   return (

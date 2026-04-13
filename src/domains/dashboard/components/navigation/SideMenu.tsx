@@ -35,4 +35,4 @@ export default function SideMenu() {
   );
 }
 
-//TODO: 추후 이미지 추가 후 로고 완성
+//TODO: 추후 페이지 상태관리 추가

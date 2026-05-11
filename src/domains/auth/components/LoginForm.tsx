@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 type Props = {
   email: string;
@@ -21,6 +22,27 @@ export default function LoginForm({
   onChangePassword,
   onTogglePassword,
 }: Props) {
+  const [emailErr, setEmailErr] = useState('');
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeEmail(e.target.value);
+  };
+
+  const handleEmailBlur = () => {
+    if (email === '') {
+      setEmailErr('');
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      setEmailErr('이메일 형식으로 입력해주세요.');
+    } else {
+      setEmailErr('');
+    }
+  };
+
   return (
     <>
       <form className="flex flex-col gap-12 w-full max-w-2xl mb-20">
@@ -32,10 +54,12 @@ export default function LoginForm({
             id="email"
             type="email"
             value={email}
-            onChange={(e) => onChangeEmail(e.target.value)}
+            onChange={handleEmailChange}
+            onBlur={handleEmailBlur}
             placeholder="이메일을 입력하세요"
             className="border border-gray-500 focus:border-[#5534DA] focus:outline-[#5534DA] p-5 rounded-md"
           />
+          {emailErr && <p className="text-red-500 text-sm">{emailErr}</p>}
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="password" className="text-[#333236] text-sm font-medium">

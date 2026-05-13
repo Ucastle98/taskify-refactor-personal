@@ -7,7 +7,7 @@ import LoginForm from '../components/LoginForm';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassoword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const isValid = email.trim() !== '' && password.trim() !== '';
 
@@ -29,7 +29,7 @@ export default function LoginPage() {
           isValid={isValid}
           onChangeEmail={setEmail}
           onChangePassword={setPassword}
-          onTogglePassword={() => setShowPassoword((prev) => !prev)}
+          onTogglePassword={() => setShowPassword((prev) => !prev)}
         />
       </div>
     </div>

@@ -1,3 +1,8 @@
+declare module '*.svg?url' {
+  const content: string;
+  export default content;
+}
+
 declare module '*.svg' {
   import * as React from 'react';
 

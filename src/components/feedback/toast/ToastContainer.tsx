@@ -1,11 +1,10 @@
 'use client';
 
 import { type ReactNode, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 
-import errorImage from '@/components/feedback/toast/assets/error.svg';
-import successImage from '@/components/feedback/toast/assets/success.svg';
-import warningImage from '@/components/feedback/toast/assets/warning.svg';
+import ErrorIcon from '@/components/feedback/toast/assets/error.svg';
+import SuccessIcon from '@/components/feedback/toast/assets/success.svg';
+import WarningIcon from '@/components/feedback/toast/assets/warning.svg';
 import type { ToastEventType, ToastType } from '@/components/feedback/toast/type';
 
 export const toast = ({ message, eventType }: ToastType) => {
@@ -51,11 +50,11 @@ function ToastComponent({ eventType, message }: { eventType: ToastEventType; mes
   const getEventTypeImage = (): ReactNode => {
     switch (eventType) {
       case 'success':
-        return <Image src={successImage} alt="성공" />;
+        return <SuccessIcon className="h-9 w-9" aria-hidden="true" />;
       case 'error':
-        return <Image src={errorImage} alt="실패" />;
+        return <ErrorIcon className="h-9 w-9" aria-hidden="true" />;
       case 'info':
-        return <Image src={warningImage} alt="경고" />;
+        return <WarningIcon className="h-9 w-9" aria-hidden="true" />;
       default:
         return null;
     }

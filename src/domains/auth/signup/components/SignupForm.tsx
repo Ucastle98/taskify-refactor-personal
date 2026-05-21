@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useState } from 'react';
 
 type FormValues = {
   email: string;
@@ -32,6 +31,8 @@ type Props = {
   onAgreementChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
   onTogglePassword: (field: 'showPassword' | 'showPasswordConfirm') => void;
+
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export default function SignupForm({
@@ -44,10 +45,11 @@ export default function SignupForm({
   onChange,
   onAgreementChange,
   onTogglePassword,
+  onSubmit,
 }: Props) {
   return (
     <>
-      <form className="flex flex-col gap-6 w-full max-w-2xl mb-20">
+      <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full max-w-2xl mb-20">
         <div className="flex flex-col">
           <label htmlFor="email" className="mb-3">
             이메일

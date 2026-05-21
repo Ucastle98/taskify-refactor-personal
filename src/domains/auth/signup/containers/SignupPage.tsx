@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import SignupForm from '../components/SignupForm';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function SignupPage() {
   const [formValues, setFormValues] = useState({
     email: '',
@@ -46,7 +48,7 @@ export default function SignupPage() {
 
     let message = '';
 
-    if (name === 'email' && !emailRegex.test(value)) {
+    if (name === 'email' && !EMAIL_REGEX.test(value)) {
       message = '올바른 이메일 형식이 아닙니다.';
     }
 
@@ -72,7 +74,13 @@ export default function SignupPage() {
     setIsAgreed(e.target.checked);
   };
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(formValues);
+
+    //API 요청
+  };
 
   const isFormValid =
     formValues.email !== '' &&
@@ -104,6 +112,7 @@ export default function SignupPage() {
           onTogglePassword={handleTogglePassword}
           onBlur={handleBlur}
           onAgreementChange={handleAgreementChange}
+          onSubmit={handleSubmit}
         />
       </div>
     </div>

@@ -10,11 +10,14 @@ export default function SideMenu() {
 
   return (
     <div className="flex flex-col h-full">
-      <Link href="/">
-        <h1 className="typo-32-b text-primary-tw mb-10">Taskify</h1>
+      <Link href="/" className="flex ml-2 mt-4 mb-10 gap-1">
+        <img src="/images/taskifylogo.svg" alt="Taskify 로고" className="w-8 h-8" />
+        <h1 className="text-2xl font-black tracking-tighter leading-none text-[#5534DA]">
+          Taskify
+        </h1>
       </Link>
 
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center gap-42">
         <span className="text-sm font-bold text-muted-tw">Dash Boards</span>
         <Link href="/mydashboard">
           <PlusMark

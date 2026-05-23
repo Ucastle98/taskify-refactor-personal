@@ -11,6 +11,9 @@ type Props = {
 
 export default function CreateDashboardModal({ open, onClose }: Props) {
   const [selectedColor, setSelectedColor] = useState('#7AC555');
+  const [dashboardName, setDashboardName] = useState('');
+
+  const isValid = dashboardName.trim() !== '';
 
   const handleCreate = () => {
     console.log(selectedColor);
@@ -24,6 +27,7 @@ export default function CreateDashboardModal({ open, onClose }: Props) {
         <input
           type="text"
           placeholder="뉴프로젝트"
+          onChange={(e) => setDashboardName(e.target.value)}
           className="w-full rounded-lg border border-gray-300 p-3 mb-4"
         />
         <ColorChip selected={selectedColor} onSelect={setSelectedColor} />
@@ -37,8 +41,11 @@ export default function CreateDashboardModal({ open, onClose }: Props) {
           </button>
           <button
             type="button"
+            disabled={!isValid}
             onClick={handleCreate}
-            className="flex-1 rounded-lg bg-[#5534DA] py-3 text-center text-white"
+            className={`flex-1 rounded-lg bg-[#5534DA] py-3 text-center text-white
+              ${isValid ? 'bg-[#5534DA]' : 'bg-gray-400 cursor-not-allowed'}
+              `}
           >
             생성
           </button>

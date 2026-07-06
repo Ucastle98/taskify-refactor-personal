@@ -32,6 +32,7 @@ export default function CreateTaskModal({ open, onClose, onCreate }: Props) {
   const handleCreate = () => {
     onCreate({
       title,
+      description,
       dueDate: date,
       tags,
       imageUrl: preview,
@@ -48,6 +49,10 @@ export default function CreateTaskModal({ open, onClose, onCreate }: Props) {
     const file = e.target.files?.[0];
 
     if (!file) return;
+
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
 
     const imageUrl = URL.createObjectURL(file);
 

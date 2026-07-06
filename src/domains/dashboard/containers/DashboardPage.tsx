@@ -1,18 +1,13 @@
 'use client';
 
-import ActionChip from '@/components/chip/actionchip/ActionChip';
 import GNB from '../components/navigation/GNB';
 import SideMenu from '../components/navigation/SideMenu';
 import { useState } from 'react';
-import CreateTaskModal from '../components/modal/CreateTaskModal';
-import ModifyTaskModal from '../components/modal/ModifyTaskModal';
 import AddColumnModal from '../components/modal/AddColumnModal';
-import SettingButton from '../components/icons/SettingIcon';
 import ColumnList from '../components/column/ColumnList';
 
 export default function DashboardPage() {
   const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
-  const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
   const [columns, setColumns] = useState<string[]>([]);
 
   const handleAddColumn = (columnName: string) => {

@@ -39,7 +39,7 @@ export default function ColumnCard({ title }: Props) {
         <div className="flex justify-center items-center gap-1">
           <Dot />
           <h2 className="font-bold text-[#333236]">{title}</h2>
-          <CountChip count={3} />
+          <CountChip count={tasks.length} />
         </div>
 
         <div className="relative">
@@ -95,8 +95,8 @@ export default function ColumnCard({ title }: Props) {
         onClose={() => setIsCreateTaskModalOpen(false)}
         onCreate={handleCreateTask}
       />
-      {tasks.map((task) => (
-        <div key={task.title} className="rounded-lg border border-gray-300 p-3 mb-2">
+      {tasks.map((task, index) => (
+        <div key={`${task.title}-${index}`} className="rounded-lg border border-gray-300 p-3 mb-2">
           {task.imageUrl && (
             <img
               src={task.imageUrl}
@@ -122,7 +122,9 @@ export default function ColumnCard({ title }: Props) {
           <p className="text-sm text-[#787486]">{formatDate(task.dueDate)}</p>
         </div>
       ))}
-      <div className="mt-4 text-sm text-gray-400">아직 할 일이 없습니다.</div>
+      {tasks.length === 0 && (
+        <div className="mt-4 text-sm text-gray-400">아직 할 일이 없습니다.</div>
+      )}
     </section>
   );
 }

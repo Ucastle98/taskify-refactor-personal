@@ -21,7 +21,7 @@ export default function ModifyTaskModal({ open, onClose }: Props) {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div className="w-[520px] rounded-lg bg-white p-8">
+      <div className="max-w-[520px] rounded-lg bg-white p-8">
         <h2 className="font-bold text-xl mb-6">할 일 수정</h2>
 
         <div className="flex flex-1 gap-5 mb-6">
@@ -97,9 +97,21 @@ export default function ModifyTaskModal({ open, onClose }: Props) {
           <ChipInput value={tags} onChange={setTags} placeholder="입력 후 Enter" />
         </div>
 
-        <div>
+        <div className="mb-6">
           <label className="block mb-2">이미지</label>
           <ActionChip variant="task" onClick={() => console.log('이미지 업로드')} />
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={onClose}
+            className="flex-1 border border-gray-300 rounded-lg p-2 hover:opacity-50"
+          >
+            취소
+          </button>
+          <button className="flex-1 border bg-[#5534DA] text-white rounded-lg p-2 hover:opacity-50">
+            생성
+          </button>
         </div>
       </div>
     </Modal>

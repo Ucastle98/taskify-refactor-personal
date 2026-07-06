@@ -6,10 +6,18 @@ import SideMenu from '../components/navigation/SideMenu';
 import { useState } from 'react';
 import CreateTaskModal from '../components/modal/CreateTaskModal';
 import ModifyTaskModal from '../components/modal/ModifyTaskModal';
+import AddColumnModal from '../components/modal/AddColumnModal';
+import SettingButton from '../components/icons/SettingIcon';
+import ColumnList from '../components/column/ColumnList';
 
 export default function DashboardPage() {
-  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] = useState(false);
+  const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
   const [isModifyTaskModalOpen, setIsModifyTaskModalOpen] = useState(false);
+  const [columns, setColumns] = useState<string[]>([]);
+
+  const handleAddColumn = (columnName: string) => {
+    setColumns((prev) => [...prev, columnName]);
+  };
 
   return (
     <div>
@@ -20,22 +28,13 @@ export default function DashboardPage() {
           <GNB />
 
           <main className="p-4">
-            <ActionChip onClick={() => setIsCreateTaskModalOpen(true)} variant="column" />
+            <AddColumnModal
+              open={isAddColumnModalOpen}
+              onClose={() => setIsAddColumnModalOpen(false)}
+              onCreate={handleAddColumn}
+            />
 
-            <CreateTaskModal
-              open={isCreateTaskModalOpen}
-              onClose={() => setIsCreateTaskModalOpen(false)}
-            />
-            <button
-              onClick={() => setIsModifyTaskModalOpen(true)}
-              className="border border-gray-300 mt-5 cursor-pointer hover:bg-gray-500 p-3"
-            >
-              수정하기
-            </button>
-            <ModifyTaskModal
-              open={isModifyTaskModalOpen}
-              onClose={() => setIsModifyTaskModalOpen(false)}
-            />
+            <ColumnList columns={columns} onAddColumn={() => setIsAddColumnModalOpen(true)} />
           </main>
         </div>
       </div>

@@ -1,10 +1,19 @@
 'use client';
 
-import ActionChip from '@/components/chip/actionchip/ActionChip';
 import GNB from '../components/navigation/GNB';
 import SideMenu from '../components/navigation/SideMenu';
+import { useState } from 'react';
+import AddColumnModal from '../components/modal/AddColumnModal';
+import ColumnList from '../components/column/ColumnList';
 
 export default function DashboardPage() {
+  const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
+  const [columns, setColumns] = useState<string[]>([]);
+
+  const handleAddColumn = (columnName: string) => {
+    setColumns((prev) => [...prev, columnName]);
+  };
+
   return (
     <div>
       <div className="flex">
@@ -14,10 +23,18 @@ export default function DashboardPage() {
           <GNB />
 
           <main className="p-4">
-            <ActionChip onClick={() => console.log('click')} variant="column" />
+            <AddColumnModal
+              open={isAddColumnModalOpen}
+              onClose={() => setIsAddColumnModalOpen(false)}
+              onCreate={handleAddColumn}
+            />
+
+            <ColumnList columns={columns} onAddColumn={() => setIsAddColumnModalOpen(true)} />
           </main>
         </div>
       </div>
     </div>
   );
 }
+
+// TODO: 추후 API 연결시 수정하기 버튼 모달안에서 해결되게 연결

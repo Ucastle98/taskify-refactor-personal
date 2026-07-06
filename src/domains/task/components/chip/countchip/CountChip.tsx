@@ -13,7 +13,7 @@ type CountChipProps = {
 export default function CountChip({ count, label, max = 99 }: CountChipProps) {
   const display = count > max ? `${max}+` : String(count);
   return (
-    <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs">
+    <span className="inline-flex items-center gap-1 border border-gray-300 bg-[#EEEEEE] rounded-sm px-1  text-xs text-[#787486]">
       {label && <span className="opacity-70">{label}</span>}
       <span className="font-semibold">{display}</span>
     </span>

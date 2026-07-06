@@ -42,7 +42,7 @@ export default function ChipInput({ value, onChange, placeholder }: ChipInputPro
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2 p-2 border rounded-lg focus-within:border-blue-500 min-h-[44px]">
+    <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-300 rounded-lg focus-within:border-blue-500 min-h-[44px]">
       {value.map((label, idx) => (
         <Chip key={label} label={label} colorIndex={idx % 4} onRemove={() => removeAt(idx)} />
       ))}

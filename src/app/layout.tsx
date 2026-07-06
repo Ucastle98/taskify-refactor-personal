@@ -1,6 +1,7 @@
 import { ToastContainer } from '@/components/feedback/toast/ToastContainer';
 
 import '@/styles/globals.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function RootLayout({
   children,

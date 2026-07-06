@@ -3,7 +3,7 @@
 interface ChipProps {
   label: string;
   colorIndex: number;
-  onRemove: () => void;
+  onRemove?: () => void;
 }
 
 const CHIP_BG_COLORS = ['#F9EEE3', '#E7F7D8', '#F7D8F0', '#DBE6F7'];

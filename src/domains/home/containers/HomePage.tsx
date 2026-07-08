@@ -16,7 +16,7 @@ const features = [
   {
     image: '/images/landing4.svg',
     title: '초대',
-    description: '팀원을 초대하여 함꼐 관리해요.',
+    description: '팀원을 초대하여 함께 관리해요.',
   },
   {
     image: '/images/landing5.svg',
@@ -44,7 +44,7 @@ export default function HomePage() {
 
         <main className="flex flex-col gap-10">
           <section className="mx-auto max-w-7xl py-10 flex flex-col items-center gap-8">
-            <Image src="images/taskifymain.svg" alt="main" width={700} height={420} />
+            <Image src="/images/taskifymain.svg" alt="main" width={700} height={420} />
             <span className="text-6xl text-white font-bold">
               새로운 일정 관리 <span className="text-[#5534DA]">Taskify</span>
             </span>

@@ -1,15 +1,18 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import LoginForm from '../components/LoginForm';
 
+import type { LoginFormValues } from '@/types/form';
+
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formValues, setFormValues] = useState<LoginFormValues>({
+    email: '',
+    password: '',
+  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const isValid = email.trim() !== '' && password.trim() !== '';
+  const isValid = formValues.email.trim() !== '' && formValues.password.trim() !== '';
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -23,12 +26,21 @@ export default function LoginPage() {
         </div>
 
         <LoginForm
-          email={email}
-          password={password}
+          formValues={formValues}
           showPassword={showPassword}
           isValid={isValid}
-          onChangeEmail={setEmail}
-          onChangePassword={setPassword}
+          onChangeEmail={(value) =>
+            setFormValues((prev) => ({
+              ...prev,
+              email: value,
+            }))
+          }
+          onChangePassword={(value) =>
+            setFormValues((prev) => ({
+              ...prev,
+              password: value,
+            }))
+          }
           onTogglePassword={() => setShowPassword((prev) => !prev)}
         />
       </div>

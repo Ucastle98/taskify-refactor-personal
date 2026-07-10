@@ -1,3 +1,4 @@
+import Providers from '@/providers/Providers';
 import { ToastContainer } from '@/components/feedback/toast/ToastContainer';
 
 import '@/styles/globals.css';
@@ -11,8 +12,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        {children}
-        <ToastContainer />
+        <Providers>
+          {children}
+          <ToastContainer />
+        </Providers>
       </body>
     </html>
   );

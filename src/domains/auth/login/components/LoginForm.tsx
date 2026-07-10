@@ -1,11 +1,16 @@
 'use client';
 
+import { login } from '@/services/auth';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '@/store/useAuthStore';
+
+import type { LoginFormValues } from '@/types/form';
 
 type Props = {
-  email: string;
-  password: string;
+  formValues: LoginFormValues;
   showPassword: boolean;
   isValid: boolean;
   onChangeEmail: (value: string) => void;
@@ -14,8 +19,7 @@ type Props = {
 };
 
 export default function LoginForm({
-  email,
-  password,
+  formValues,
   showPassword,
   isValid,
   onChangeEmail,
@@ -24,6 +28,10 @@ export default function LoginForm({
 }: Props) {
   const [emailErr, setEmailErr] = useState('');
 
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  const router = useRouter();
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,21 +39,45 @@ export default function LoginForm({
   };
 
   const handleEmailBlur = () => {
-    if (email === '') {
+    if (formValues.email === '') {
       setEmailErr('');
       return;
     }
 
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(formValues.email)) {
       setEmailErr('이메일 형식으로 입력해주세요.');
     } else {
       setEmailErr('');
     }
   };
 
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (result) => {
+      setAuth(result.user, result.accessToken);
+
+      router.push('/myDashboard');
+    },
+    onError: (error) => {
+      console.error(error);
+      alert('로그인에 실패했습니다.');
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValid) return;
+
+    loginMutation.mutate({
+      email: formValues.email,
+      password: formValues.password,
+    });
+  };
+
   return (
     <>
-      <form className="flex flex-col gap-12 w-full max-w-2xl mb-20">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-12 w-full max-w-2xl mb-20">
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-[#333236] text-sm font-medium">
             이메일
@@ -53,7 +85,7 @@ export default function LoginForm({
           <input
             id="email"
             type="email"
-            value={email}
+            value={formValues.email}
             onChange={handleEmailChange}
             onBlur={handleEmailBlur}
             placeholder="이메일을 입력하세요"
@@ -70,7 +102,7 @@ export default function LoginForm({
             <input
               id="password"
               type={showPassword ? 'text' : 'password'}
-              value={password}
+              value={formValues.password}
               onChange={(e) => onChangePassword(e.target.value)}
               placeholder="비밀번호를 입력하세요"
               className="
@@ -93,13 +125,13 @@ export default function LoginForm({
         <div className="flex flex-col">
           <button
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || loginMutation.isPending}
             className={`
                 p-5 rounded-md text-white 
-                ${isValid ? 'bg-[#5534DA] cursor-pointer' : 'bg-gray-300 cursor-not-allowed'}
+                ${isValid && !loginMutation.isPending ? 'bg-[#5534DA] cursor-pointer hover:opacity-80' : 'bg-gray-300 cursor-not-allowed'}
                 `}
           >
-            로그인
+            {loginMutation.isPending ? '로그인 중...' : '로그인'}
           </button>
           <span className="mt-5 text-center">
             회원이 아니신가요?{' '}

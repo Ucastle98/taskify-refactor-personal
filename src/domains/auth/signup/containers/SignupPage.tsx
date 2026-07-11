@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import SignupForm from '../components/SignupForm';
 
+import type { SignUpFormValues, SignUpFormErrors } from '@/types/form';
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function SignupPage() {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<SignUpFormValues>({
     email: '',
     nickname: '',
     password: '',
@@ -18,7 +20,7 @@ export default function SignupPage() {
     showPasswordConfirm: false,
   });
 
-  const [error, setError] = useState({
+  const [error, setError] = useState<SignUpFormErrors>({
     email: '',
     nickname: '',
     password: '',
@@ -74,24 +76,24 @@ export default function SignupPage() {
     setIsAgreed(e.target.checked);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(formValues);
-
-    //API 요청
-  };
-
   const isFormValid =
-    formValues.email !== '' &&
-    formValues.nickname !== '' &&
-    formValues.password !== '' &&
-    formValues.passwordConfirm !== '' &&
-    isAgreed &&
-    !error.email &&
-    !error.nickname &&
-    !error.password &&
-    !error.passwordConfirm;
+    EMAIL_REGEX.test(formValues.email) &&
+    formValues.nickname.trim().length > 0 &&
+    formValues.nickname.length <= 10 &&
+    formValues.password.length >= 8 &&
+    formValues.passwordConfirm === formValues.password &&
+    isAgreed;
+
+  // const isFormValid =
+  //   formValues.email !== '' &&
+  //   formValues.nickname !== '' &&
+  //   formValues.password !== '' &&
+  //   formValues.passwordConfirm !== '' &&
+  //   isAgreed &&
+  //   !error.email &&
+  //   !error.nickname &&
+  //   !error.password &&
+  //   !error.passwordConfirm;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -101,7 +103,7 @@ export default function SignupPage() {
         <span className="text-[#333236] font-bold">첫 방문을 환영합니다!</span>
       </div>
 
-      <div className="mt-5 w-full max-w-[520px]">
+      <div className="mt-5 w-full max-w-130">
         <SignupForm
           formValues={formValues}
           uiState={uiState}
@@ -112,7 +114,6 @@ export default function SignupPage() {
           onTogglePassword={handleTogglePassword}
           onBlur={handleBlur}
           onAgreementChange={handleAgreementChange}
-          onSubmit={handleSubmit}
         />
       </div>
     </div>

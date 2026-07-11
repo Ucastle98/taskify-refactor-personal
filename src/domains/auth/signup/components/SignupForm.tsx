@@ -1,24 +1,18 @@
 import Link from 'next/link';
+import { signUp } from '@/services/auth';
+import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
 
-type FormValues = {
-  email: string;
-  nickname: string;
-  password: string;
-  passwordConfirm: string;
-};
+import type { SignUpFormValues, SignUpFormErrors } from '@/types/form';
 
 type Props = {
-  formValues: FormValues;
+  formValues: SignUpFormValues;
+
   uiState: {
     showPassword: boolean;
     showPasswordConfirm: boolean;
   };
-  error: {
-    email: string;
-    nickname: string;
-    password: string;
-    passwordConfirm: string;
-  };
+  error: SignUpFormErrors;
 
   isAgreed: boolean;
 
@@ -31,8 +25,6 @@ type Props = {
   onAgreementChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
   onTogglePassword: (field: 'showPassword' | 'showPasswordConfirm') => void;
-
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 export default function SignupForm({
@@ -45,11 +37,37 @@ export default function SignupForm({
   onChange,
   onAgreementChange,
   onTogglePassword,
-  onSubmit,
 }: Props) {
+  const router = useRouter();
+
+  const signupMutation = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      alert('회원가입이 완료되었습니다.');
+      router.push('/auth/login');
+    },
+
+    onError: () => {
+      alert('회원가입에 실패했습니다.');
+    },
+  });
+
+  // 추후 alert -> toast로 교체
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isFormValid) return;
+
+    signupMutation.mutate({
+      email: formValues.email,
+      password: formValues.password,
+      nickname: formValues.nickname,
+    });
+  };
+
   return (
     <>
-      <form onSubmit={onSubmit} className="flex flex-col gap-6 w-full max-w-2xl mb-20">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full max-w-2xl mb-20">
         <div className="flex flex-col">
           <label htmlFor="email" className="mb-3">
             이메일
@@ -155,7 +173,9 @@ export default function SignupForm({
             type="submit"
             disabled={!isFormValid}
             className={`p-4 rounded-xl border border-gray-300 text-white ${
-              isFormValid ? `bg-[#5534DA] cursor-pointer` : `bg-gray-400 cursor-not-allowed`
+              isFormValid
+                ? `bg-[#5534DA] cursor-pointer hover:opacity-80`
+                : `bg-gray-400 cursor-not-allowed`
             }`}
           >
             가입하기

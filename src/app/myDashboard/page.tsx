@@ -18,7 +18,7 @@ export default function Page() {
       <SideMenu />
 
       <div className="flex flex-1 flex-col">
-        <GNB />
+        <GNB title="내 대시보드" />
 
         <main className="mt-10 ml-6 md:ml-9 lg:ml-10 flex w-full flex-col gap-8 lg:max-w-240">
           <section className="grid w-65 md:w-126 lg:w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">

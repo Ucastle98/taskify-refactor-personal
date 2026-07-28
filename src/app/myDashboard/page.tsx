@@ -7,11 +7,20 @@ import PlusMark from '@/components/icons/PlusMark';
 import CreateDashboardModal from '@/domains/myDashboard/components/CreateDashboardModal';
 
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import SideMenu from '@/domains/dashboard/components/navigation/SideMenu';
 import GNB from '@/domains/dashboard/components/navigation/GNB';
+import { getDashboards } from '@/services/dashboard';
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data } = useQuery({
+    queryKey: ['dashboards'],
+    queryFn: getDashboards,
+  });
+
+  const dashboards = data?.dashboards ?? [];
 
   return (
     <div className="flex min-h-screen">
@@ -34,7 +43,18 @@ export default function Page() {
             </Button>
             <CreateDashboardModal open={isOpen} onClose={() => setIsOpen(false)} />
 
-            <MyDashboardButton
+            {dashboards.map((dashboard) => (
+              <MyDashboardButton
+                key={dashboard.id}
+                dashboardId={dashboard.id}
+                className="h-14.5 w-full md:h-17 lg:h-17.5"
+                dashboardName={dashboard.title}
+                isMadeByMe={dashboard.createdByMe}
+                colorDot={dashboard.color}
+              />
+            ))}
+
+            {/* <MyDashboardButton
               className="h-14.5 w-full md:h-17 lg:h-17.5"
               dashboardName="2분기 계획"
               isMadeByMe={true}
@@ -45,7 +65,7 @@ export default function Page() {
               dashboardName="2분기 계획"
               isMadeByMe={false}
               colorDot="#E8DFF5"
-            />
+            /> */}
           </section>
           <InvitedDashboard className="lg:mt-8" />
         </main>

@@ -1,8 +1,11 @@
+import Link from 'next/link';
+
 import Crown from '@/assets/icons/crown.svg';
 import Button from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 
 interface MyDashboardButton {
+  dashboardId: number;
   dashboardName: string;
   isMadeByMe: boolean;
   colorDot: string;
@@ -11,6 +14,7 @@ interface MyDashboardButton {
 
 export default function MyDashboardButton({
   className,
+  dashboardId,
   dashboardName,
   isMadeByMe,
   colorDot,
@@ -18,7 +22,7 @@ export default function MyDashboardButton({
   const baseStyle = 'flex justify-start pl-5 text-sm font-semibold md:text-base';
 
   return (
-    <div>
+    <Link href={`/dashboard/${dashboardId}`}>
       <Button className={cn(baseStyle, className)} variant="add">
         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: colorDot }} />
         <p className="ml-2 md:ml-3 lg:ml-4">{dashboardName}</p>
@@ -28,6 +32,6 @@ export default function MyDashboardButton({
           </div>
         )}
       </Button>
-    </div>
+    </Link>
   );
 }

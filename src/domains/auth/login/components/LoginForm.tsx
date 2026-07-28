@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/useAuthStore';
-import { isAxiosError } from 'axios';
+import { getAxiosErrorMessage } from '@/lib/getAxiosErrorMessage';
 
 import type { LoginFormValues } from '@/types/form';
 
@@ -60,13 +60,7 @@ export default function LoginForm({
       router.push('/myDashboard');
     },
     onError: (error) => {
-      console.error(error);
-
-      const message = isAxiosError<{ message?: string }>(error)
-        ? (error.response?.data?.message ?? '로그인에 실패했습니다.')
-        : '로그인에 실패했습니다.';
-
-      alert(message);
+      alert(getAxiosErrorMessage(error, '로그인에 실패했습니다.'));
     },
   });
 

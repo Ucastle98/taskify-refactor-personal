@@ -15,6 +15,7 @@ type GNBProps = {
 
 export default function GNB({ title, isOwner = false, members }: GNBProps) {
   const user = useAuthStore((state) => state.user);
+  const hasHydrated = useAuthStore((state) => state.hasHydrated);
 
   return (
     <header className="flex h-17.5 items-center justify-between border-b border-gray-300 px-8">
@@ -59,9 +60,11 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
         {/* 프로필 */}
         <div className="flex items-center gap-2 border-l border-gray-200 pl-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-400 text-xs text-white">
-            {user?.nickname?.[0] ?? ''}
+            {hasHydrated ? (user?.nickname?.[0] ?? '') : ''}
           </div>
-          <span className="text-sm font-medium text-[#333236]">{user?.nickname}</span>
+          <span className="text-sm font-medium text-[#333236]">
+            {hasHydrated ? user?.nickname : ''}
+          </span>
         </div>
       </div>
     </header>

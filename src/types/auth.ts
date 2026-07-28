@@ -13,14 +13,18 @@ export interface User {
   updatedAt: string;
 }
 
-export interface SignupResponse extends User {}
-
 export interface LoginRequest {
   email: string;
   password: string;
 }
 
+export interface SignupResponse extends User {}
+
 export interface LoginResponse {
   user: User;
   accessToken: string;
+}
+
+export interface ApiErrorResponse {
+  message: string;
 }

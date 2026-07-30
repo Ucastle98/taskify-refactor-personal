@@ -15,7 +15,7 @@ import { getDashboards } from '@/services/dashboard';
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['dashboards'],
     queryFn: getDashboards,
   });
@@ -43,29 +43,37 @@ export default function Page() {
             </Button>
             <CreateDashboardModal open={isOpen} onClose={() => setIsOpen(false)} />
 
-            {dashboards.map((dashboard) => (
-              <MyDashboardButton
-                key={dashboard.id}
-                dashboardId={dashboard.id}
-                className="h-14.5 w-full md:h-17 lg:h-17.5"
-                dashboardName={dashboard.title}
-                isMadeByMe={dashboard.createdByMe}
-                colorDot={dashboard.color}
-              />
-            ))}
+            {isPending && (
+              <div className="col-span-full flex items-center justify-center py-10 text-m text-[#9FA6B2]">
+                대시보드를 불러오는 중이에요...
+              </div>
+            )}
 
-            {/* <MyDashboardButton
-              className="h-14.5 w-full md:h-17 lg:h-17.5"
-              dashboardName="2분기 계획"
-              isMadeByMe={true}
-              colorDot="#E8DFF5"
-            />
-            <MyDashboardButton
-              className="h-14.5 w-full md:h-17 lg:h-17.5"
-              dashboardName="2분기 계획"
-              isMadeByMe={false}
-              colorDot="#E8DFF5"
-            /> */}
+            {isError && (
+              <div className="col-span-full flex flex-col items-center justify-center gap-3 py-10">
+                <p className="text-sm text-red-500">대시보드를 불러오지 못했어요.</p>
+                <button
+                  type="button"
+                  onClick={() => refetch()}
+                  className="rounded-lg border border-gray-300 px-4 py-2 text-sm text-[#787486] hover:bg-gray-50"
+                >
+                  다시 시도
+                </button>
+              </div>
+            )}
+
+            {!isPending &&
+              !isError &&
+              dashboards.map((dashboard) => (
+                <MyDashboardButton
+                  key={dashboard.id}
+                  dashboardId={dashboard.id}
+                  className="h-14.5 w-full md:h-17 lg:h-17.5"
+                  dashboardName={dashboard.title}
+                  isMadeByMe={dashboard.createdByMe}
+                  colorDot={dashboard.color}
+                />
+              ))}
           </section>
           <InvitedDashboard className="lg:mt-8" />
         </main>

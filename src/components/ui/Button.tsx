@@ -11,8 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
 }
 
-export default function Button({ className, children, variant = 'w', ...props }: ButtonProps) {
-  // default: rounded-6, 폰트 16px 굵기 medium
+export const getButtonStyles = (variant: ButtonVariant = 'w', className?: string) => {
   const baseStyle = cn(
     'inline-flex justify-center items-center transition-all duration-150 rounded-md font-medium bg-white',
     'disabled:bg-[#9FA6B2] disabled:text-white disabled:opacity-50',
@@ -27,8 +26,12 @@ export default function Button({ className, children, variant = 'w', ...props }:
     icon: 'border-0 bg-transparent p-0 hover:bg-transparent active:bg-transparent shadow-none',
   }[variant];
 
+  return cn(baseStyle, variantStyle, className);
+};
+
+export default function Button({ className, children, variant = 'w', ...props }: ButtonProps) {
   return (
-    <button className={cn(baseStyle, variantStyle, className)} {...props}>
+    <button className={getButtonStyles(variant, className)} {...props}>
       {children}
     </button>
   );

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { signUp } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
+import { getAxiosErrorMessage } from '@/lib/getAxiosErrorMessage';
 
 import type { SignUpFormValues, SignUpFormErrors } from '@/types/form';
 
@@ -47,8 +48,8 @@ export default function SignupForm({
       router.push('/auth/login');
     },
 
-    onError: () => {
-      alert('회원가입에 실패했습니다.');
+    onError: (error) => {
+      alert(getAxiosErrorMessage(error, '회원가입에 실패했습니다.'));
     },
   });
 

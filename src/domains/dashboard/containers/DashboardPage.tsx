@@ -14,13 +14,19 @@ export default function DashboardPage() {
     setColumns((prev) => [...prev, columnName]);
   };
 
+  // // 나중에 대시보드 상세 작업 시
+  // const { data: dashboard } = useQuery({
+  //   queryKey: ['dashboard', dashboardId],
+  //   queryFn: () => getDashboard(dashboardId),
+  // })
+
   return (
     <div>
       <div className="flex">
         <SideMenu />
 
         <div className="flex flex-1 flex-col gap-4">
-          <GNB />
+          <GNB title="대시보드" />
 
           <main className="p-4">
             <AddColumnModal

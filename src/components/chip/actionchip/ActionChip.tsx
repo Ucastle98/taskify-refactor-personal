@@ -26,7 +26,7 @@ const VARIANT_STYLES: Record<ActionChipVariant, { button: string; plus: string; 
   column: {
     // 컬럼 생성 + 버튼
     button:
-      'w-70 h-12.5 rounded-[8px] bg-white text-[#5534DA] border border-[#D9D9D9] flex items-center justify-center',
+      'w-[354px] h-17.5 rounded-[8px] bg-white text-[#5534DA] border border-[#D9D9D9] flex items-center justify-center',
     plus: 'ml-4 flex items-center justify-center w-6 h-6 bg-[#F1EFFD] rounded-[4px] group-hover:bg-gray-300',
     text: 'text-lg font-bold text-[#333236]',
   },

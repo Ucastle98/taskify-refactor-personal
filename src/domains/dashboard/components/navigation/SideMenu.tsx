@@ -9,7 +9,7 @@ import { getDashboards } from '@/services/dashboard';
 
 export default function SideMenu() {
   // const [page, setPage] = useState(1);
-  const totalPages = 10; // 임시 추후 API 확인 또는 팀원 상의
+  // const totalPages = 10; // 임시 추후 API 확인 또는 팀원 상의
 
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['dashboards'],
@@ -20,7 +20,7 @@ export default function SideMenu() {
 
   return (
     <div className="flex flex-col h-screen min-w-75 border-r border-gray-300 px-3 py-1">
-      <Link href="/" className="flex ml-2 mt-4 mb-10 gap-1">
+      <Link href="/myDashboard" className="flex ml-2 mt-4 mb-10 gap-1">
         <img src="/images/taskifylogo.svg" alt="Taskify 로고" className="w-8 h-8" />
         <h1 className="text-2xl font-black tracking-tighter leading-none text-[#5534DA]">
           Taskify

@@ -22,3 +22,8 @@ export const createDashboard = async (data: CreateDashboardRequest) => {
   const response = await api.post<Dashboard>(`/dashboards`, data);
   return response.data;
 };
+
+export const getDashboard = async (dashboardId: number) => {
+  const response = await api.get<Dashboard>(`/dashboards/${dashboardId}`);
+  return response.data;
+};

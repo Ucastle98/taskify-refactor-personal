@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-
+import NothingInvitedDashboard from '@/components/icons/NothingInvitedDashboard';
 import { cn } from '@/lib/cn';
 import { getInvitations } from '@/services/invitation';
 
+import { useQuery } from '@tanstack/react-query';
+
 import InvitedDashboardCard from './InvitedDashboardCard';
-import NothingInvitedDashboard from '@/components/icons/NothingInvitedDashboard';
 
 interface InvitedDashboardListProps {
   className?: string;

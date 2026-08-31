@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { signUp } from '@/services/auth';
 import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
-import { getAxiosErrorMessage } from '@/lib/getAxiosErrorMessage';
 
-import type { SignUpFormValues, SignUpFormErrors } from '@/types/form';
+import { getAxiosErrorMessage } from '@/lib/getAxiosErrorMessage';
+import { signUp } from '@/services/auth';
+import type { SignUpFormErrors,SignUpFormValues } from '@/types/form';
+
+import { useMutation } from '@tanstack/react-query';
 
 type Props = {
   formValues: SignUpFormValues;

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import SignupForm from '../components/SignupForm';
 
-import type { SignUpFormValues, SignUpFormErrors } from '@/types/form';
+import type { SignUpFormErrors,SignUpFormValues } from '@/types/form';
+
+import SignupForm from '../components/SignupForm';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -98,7 +99,7 @@ export default function SignupPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center">
-        <img src="/images/taskifylogo.svg" alt="Taskify 로고"></img>
+        <img src="/images/taskifylogo.svg" alt="Taskify 로고" />
         <h1 className="font-bold text-6xl text-[#5534DA] mb-4">Taskify</h1>
         <span className="text-[#333236] font-bold">첫 방문을 환영합니다!</span>
       </div>

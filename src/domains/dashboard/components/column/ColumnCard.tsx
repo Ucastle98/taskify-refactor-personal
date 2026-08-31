@@ -1,13 +1,16 @@
 'use client';
 
-import CountChip from '@/domains/task/components/chip/countchip/CountChip';
-import SettingButton from '../icons/SettingIcon';
-import Dot from '../ui/Dot';
-import PlusMark from '@/components/icons/PlusMark';
-import CreateTaskModal, { Task } from '../modal/CreateTaskModal';
 import { useState } from 'react';
-import ModifyTaskModal from '../modal/ModifyTaskModal';
+
+import PlusMark from '@/components/icons/PlusMark';
+import CountChip from '@/domains/task/components/chip/countchip/CountChip';
 import Chip from '@/domains/task/components/chip/textchip/Chip';
+
+import SettingButton from '../icons/SettingIcon';
+import type { Task } from '../modal/CreateTaskModal';
+import CreateTaskModal from '../modal/CreateTaskModal';
+import ModifyTaskModal from '../modal/ModifyTaskModal';
+import Dot from '../ui/Dot';
 
 type Props = {
   title: string;
@@ -34,7 +37,7 @@ export default function ColumnCard({ title }: Props) {
   };
 
   return (
-    <section className="w-70 rounded-lg border border-gray-300 bg-white p-4">
+    <section className="w-88.5 rounded-lg border border-gray-300 bg-white p-4">
       <div className="flex justify-between mb-2">
         <div className="flex justify-center items-center gap-1">
           <Dot />
@@ -86,8 +89,9 @@ export default function ColumnCard({ title }: Props) {
         onClick={() => setIsCreateTaskModalOpen(true)}
         className="w-full border border-gray-300 rounded-lg p-1 mb-2"
       >
-        <span className="inline-flex rounded-md bg-violet-100 p-2 hover:opacity-50">
+        <span className="inline-flex items-center justify-center gap-2 rounded-md bg-violet-100 p-2 hover:opacity-50">
           <PlusMark size={11} thickness={2} />
+          <span className="text-sm text-[#5534DA]">할 일을 생성해 주세요!</span>
         </span>
       </button>
       <CreateTaskModal

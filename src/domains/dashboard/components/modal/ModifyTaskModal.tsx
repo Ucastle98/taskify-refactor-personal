@@ -1,14 +1,14 @@
 'use client';
 
+import { useState } from 'react';
+
 import ActionChip from '@/components/chip/actionchip/ActionChip';
 import { Dropdown } from '@/components/dropdown/Dropdown';
 import Modal from '@/components/ui/Modal';
 import StateChipItem, {
   type StateLabel,
 } from '@/domains/task/components/chip/statechip/StateChipItem';
-import StateChipList from '@/domains/task/components/chip/statechip/StateChipList';
 import ChipInput from '@/domains/task/components/chip/textchip/ChipInput';
-import { useState } from 'react';
 
 type Props = {
   open: boolean;

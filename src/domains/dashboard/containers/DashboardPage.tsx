@@ -1,24 +1,31 @@
 'use client';
 
+import { useState } from 'react';
+
+import { getDashboard } from '@/services/dashboard';
+
+import { useQuery } from '@tanstack/react-query';
+
+import ColumnList from '../components/column/ColumnList';
+import AddColumnModal from '../components/modal/AddColumnModal';
 import GNB from '../components/navigation/GNB';
 import SideMenu from '../components/navigation/SideMenu';
-import { useState } from 'react';
-import AddColumnModal from '../components/modal/AddColumnModal';
-import ColumnList from '../components/column/ColumnList';
 
-export default function DashboardPage() {
+type Props = {
+  dashboardId: number;
+};
+
+export default function DashboardPage({ dashboardId }: Props) {
   const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
-  const [columns, setColumns] = useState<string[]>([]);
 
-  const handleAddColumn = (columnName: string) => {
-    setColumns((prev) => [...prev, columnName]);
-  };
-
-  // // 나중에 대시보드 상세 작업 시
-  // const { data: dashboard } = useQuery({
-  //   queryKey: ['dashboard', dashboardId],
-  //   queryFn: () => getDashboard(dashboardId),
-  // })
+  const {
+    data: dashboard,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ['dashboard', dashboardId],
+    queryFn: () => getDashboard(dashboardId),
+  });
 
   return (
     <div>
@@ -26,16 +33,24 @@ export default function DashboardPage() {
         <SideMenu />
 
         <div className="flex flex-1 flex-col gap-4">
-          <GNB title="대시보드" />
+          <GNB
+            title={isPending ? '' : (dashboard?.title ?? '대시보드')}
+            isOwner={dashboard?.createdByMe}
+          />
 
           <main className="p-4">
+            {isError && <p className="text-sm text-red-500">대시보드를 불러오지 못했습니다.</p>}
+
             <AddColumnModal
               open={isAddColumnModalOpen}
               onClose={() => setIsAddColumnModalOpen(false)}
-              onCreate={handleAddColumn}
+              dashboardId={dashboardId}
             />
 
-            <ColumnList columns={columns} onAddColumn={() => setIsAddColumnModalOpen(true)} />
+            <ColumnList
+              dashboardId={dashboardId}
+              onAddColumn={() => setIsAddColumnModalOpen(true)}
+            />
           </main>
         </div>
       </div>

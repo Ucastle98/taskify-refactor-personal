@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
 import { FaGithub } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { SiVelog } from 'react-icons/si';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import FeatureCard from '../components/FeatureCard';
 
 const features = [

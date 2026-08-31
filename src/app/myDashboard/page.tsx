@@ -1,16 +1,17 @@
 'use client';
 
+import { useState } from 'react';
+
+import PlusMark from '@/components/icons/PlusMark';
 import Button from '@/components/ui/Button';
+import GNB from '@/domains/dashboard/components/navigation/GNB';
+import SideMenu from '@/domains/dashboard/components/navigation/SideMenu';
+import CreateDashboardModal from '@/domains/myDashboard/components/CreateDashboardModal';
 import InvitedDashboard from '@/domains/myDashboard/components/InvitedDashboardList';
 import MyDashboardButton from '@/domains/myDashboard/components/MyDashboardButton';
-import PlusMark from '@/components/icons/PlusMark';
-import CreateDashboardModal from '@/domains/myDashboard/components/CreateDashboardModal';
-
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import SideMenu from '@/domains/dashboard/components/navigation/SideMenu';
-import GNB from '@/domains/dashboard/components/navigation/GNB';
 import { getDashboards } from '@/services/dashboard';
+
+import { useQuery } from '@tanstack/react-query';
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);

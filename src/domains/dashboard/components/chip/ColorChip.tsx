@@ -1,6 +1,5 @@
 // ColorChip.tsx
 
-import { useState } from 'react';
 
 type Props = {
   selected: string;

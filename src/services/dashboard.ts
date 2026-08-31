@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-
 import type { Dashboard, DashboardListResponse } from '@/types/dashboard';
 
 const teamId = process.env.NEXT_PUBLIC_TEAM_ID;
@@ -20,5 +19,10 @@ export interface CreateDashboardRequest {
 
 export const createDashboard = async (data: CreateDashboardRequest) => {
   const response = await api.post<Dashboard>(`/dashboards`, data);
+  return response.data;
+};
+
+export const getDashboard = async (dashboardId: number) => {
+  const response = await api.get<Dashboard>(`/dashboards/${dashboardId}`);
   return response.data;
 };

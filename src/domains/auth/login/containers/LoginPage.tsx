@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import LoginForm from '../components/LoginForm';
 
 import type { LoginFormValues } from '@/types/form';
+
+import LoginForm from '../components/LoginForm';
 
 export default function LoginPage() {
   const [formValues, setFormValues] = useState<LoginFormValues>({

@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-
 import type { InvitationsListResponse } from '@/types/invitation';
 
 const teamId = process.env.NEXT_PUBLIC_TEAM_ID;

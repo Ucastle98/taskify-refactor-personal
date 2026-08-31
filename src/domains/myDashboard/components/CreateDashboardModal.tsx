@@ -1,12 +1,13 @@
 'use client';
 
+import { useState } from 'react';
+
 import Modal from '@/components/ui/Modal';
 import ColorChip from '@/domains/dashboard/components/chip/ColorChip';
-import { useState } from 'react';
+import { createDashboard } from '@/services/dashboard';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-
-import { createDashboard } from '@/services/dashboard';
 
 type Props = {
   open: boolean;

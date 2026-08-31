@@ -1,10 +1,11 @@
 'use client';
 
+import { useRef, useState } from 'react';
+import DatePicker from 'react-datepicker';
+
 import ActionChip from '@/components/chip/actionchip/ActionChip';
 import Modal from '@/components/ui/Modal';
 import ChipInput from '@/domains/task/components/chip/textchip/ChipInput';
-import { useRef, useState } from 'react';
-import DatePicker from 'react-datepicker';
 
 export type Task = {
   title: string;

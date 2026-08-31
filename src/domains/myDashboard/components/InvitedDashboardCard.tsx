@@ -1,5 +1,4 @@
 import Button from '@/components/ui/Button';
-
 import type { Invitation } from '@/types/invitation';
 
 interface InvitedDashboardCardProps {

@@ -1,5 +1,5 @@
-import Providers from '@/providers/Providers';
 import { ToastContainer } from '@/components/feedback/toast/ToastContainer';
+import Providers from '@/providers/Providers';
 
 import '@/styles/globals.css';
 import 'react-datepicker/dist/react-datepicker.css';

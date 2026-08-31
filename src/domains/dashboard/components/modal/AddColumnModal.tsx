@@ -1,11 +1,12 @@
 'use client';
 
-import Modal from '@/components/ui/Modal';
 import { useState } from 'react';
+
+import Modal from '@/components/ui/Modal';
+import { createColumn } from '@/services/column';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-
-import { createColumn } from '@/services/column';
 
 type Props = {
   open: boolean;

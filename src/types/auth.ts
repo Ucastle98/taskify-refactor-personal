@@ -18,7 +18,7 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface SignupResponse extends User {}
+export type SignupResponse = User;
 
 export interface LoginResponse {
   user: User;

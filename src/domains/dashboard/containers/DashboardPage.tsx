@@ -1,13 +1,15 @@
 'use client';
 
+import { useState } from 'react';
+
+import { getDashboard } from '@/services/dashboard';
+
 import { useQuery } from '@tanstack/react-query';
 
+import ColumnList from '../components/column/ColumnList';
+import AddColumnModal from '../components/modal/AddColumnModal';
 import GNB from '../components/navigation/GNB';
 import SideMenu from '../components/navigation/SideMenu';
-import { useState } from 'react';
-import AddColumnModal from '../components/modal/AddColumnModal';
-import ColumnList from '../components/column/ColumnList';
-import { getDashboard } from '@/services/dashboard';
 
 type Props = {
   dashboardId: number;

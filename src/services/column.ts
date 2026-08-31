@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-
 import type { Column, ColumnListResponse } from '@/types/columns';
 
 export const getColumns = async (dashboardId: number) => {

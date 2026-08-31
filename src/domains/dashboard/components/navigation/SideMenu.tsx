@@ -1,11 +1,12 @@
 // SideMenu.tsx
 
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
 
-import PlusMark from '@/components/icons/PlusMark';
 import Crown from '@/assets/icons/crown.svg';
+import PlusMark from '@/components/icons/PlusMark';
 import { getDashboards } from '@/services/dashboard';
+
+import { useQuery } from '@tanstack/react-query';
 
 export default function SideMenu() {
   // const [page, setPage] = useState(1);
@@ -29,7 +30,7 @@ export default function SideMenu() {
 
       <div className="flex items-center justify-between">
         <span className="text-sm font-bold text-muted-tw px-2 whitespace-nowrap">Dash Boards</span>
-        <Link href="/mydashboard">
+        <Link href="/myDashboard">
           <PlusMark
             size={13}
             thickness={1}

@@ -1,5 +1,6 @@
 // PageNation.tsx
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+
 import AngleBrackets from '../icons/AngleBrackets';
 import usePageToast from '../toast/pagetoast/usePageToast';
 
@@ -10,29 +11,19 @@ type PagiNationProps = {
   className?: string;
 };
 
-export default function PagiNation({
-  page,
-  totalPages,
-  onPageChange,
-  className = '',
-}: PagiNationProps) {
+export default function PagiNation({ page, totalPages, onPageChange }: PagiNationProps) {
   // const isPrevDisabled = page <= 1;
   // const isNextDisabled = page >= totalPages;
 
   const { showToast, Toast } = usePageToast();
 
-  const prevPageRef = useRef(page);
+  const [prevPage, setPrevPage] = useState(page);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
-  useEffect(() => {
-    if (page > prevPageRef.current) {
-      setDirection('next');
-    } else if (page < prevPageRef.current) {
-      setDirection('prev');
-    }
-
-    prevPageRef.current = page;
-  }, [page]);
+  if (page !== prevPage) {
+    setDirection(page > prevPage ? 'next' : 'prev');
+    setPrevPage(page);
+  }
 
   const goPrev = () => {
     if (page <= 1) {

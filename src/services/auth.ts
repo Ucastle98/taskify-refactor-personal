@@ -1,9 +1,9 @@
 import { api } from '@/lib/api';
 import {
-  type SignupResponse,
   type LoginRequest,
   type LoginResponse,
   type SignUpRequest,
+  type SignupResponse,
 } from '@/types/auth';
 
 const teamId = process.env.NEXT_PUBLIC_TEAM_ID;

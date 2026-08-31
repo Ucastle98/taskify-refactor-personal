@@ -1,8 +1,9 @@
+import ActionChip from '@/components/chip/actionchip/ActionChip';
+import { getColumns } from '@/services/column';
+
 import { useQuery } from '@tanstack/react-query';
 
-import ActionChip from '@/components/chip/actionchip/ActionChip';
 import ColumnCard from './ColumnCard';
-import { getColumns } from '@/services/column';
 
 type Props = {
   dashboardId: number;

@@ -1,5 +1,4 @@
 import { api } from '@/lib/api';
-
 import type { Dashboard, DashboardListResponse } from '@/types/dashboard';
 
 const teamId = process.env.NEXT_PUBLIC_TEAM_ID;

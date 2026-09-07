@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import DropdownMenu from '@/components/dropdown/DropdownMenu';
@@ -25,6 +25,8 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
   const logout = useAuthStore((state) => state.logout);
 
   const router = useRouter();
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -89,9 +91,9 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
         )}
 
         {/* 프로필 */}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={() => setIsDropdownOpen(true)}
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
             className="flex items-center gap-2 border-l border-gray-200 pl-4 hover:opacity-60"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-400 text-xs text-white">
@@ -105,6 +107,7 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
             items={menuItem}
             open={isDropdownOpen}
             onClose={() => setIsDropdownOpen(false)}
+            menuRef={dropdownRef}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 type MenuItem = {
   label: string;
@@ -11,12 +11,11 @@ type DropdownMenuProps = {
   open: boolean;
   onClose: () => void;
   items?: MenuItem[];
-  className?: '';
+  className?: string;
+  menuRef: React.RefObject<HTMLDivElement | null>;
 };
 
-export default function DropdownMenu({ open, onClose, items }: DropdownMenuProps) {
-  const menuRef = useRef<HTMLDivElement>(null);
-
+export default function DropdownMenu({ open, onClose, items, menuRef }: DropdownMenuProps) {
   useEffect(() => {
     if (!open) return;
 
@@ -52,10 +51,7 @@ export default function DropdownMenu({ open, onClose, items }: DropdownMenuProps
   if (!open) return null;
 
   return (
-    <div
-      ref={menuRef}
-      className="absolute mt-1 w-23.25 h-20.5 border border-gray-300 rounded-lg bg-white"
-    >
+    <div className="absolute mt-1 w-23.25 h-20.5 border border-gray-300 rounded-lg bg-white">
       <div className="flex flex-col items-center">
         {items?.map((item) => (
           <div key={item.label}>

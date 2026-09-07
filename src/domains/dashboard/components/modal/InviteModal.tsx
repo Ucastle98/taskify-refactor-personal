@@ -19,11 +19,13 @@ export default function InviteModal({ open, onClose }: Props) {
         </div>
 
         <div className="flex flex-col gap-2 mt-5">
-          <label>이메일</label>
-          <input
-            className="rounded-lg border border-gray-400 p-4"
-            placeholder="초대하실 이메일을 입력해주세요."
-          />
+          <label>
+            이메일
+            <input
+              className="rounded-lg border border-gray-400 p-4"
+              placeholder="초대하실 이메일을 입력해주세요."
+            />
+          </label>
         </div>
 
         <div className="flex gap-1 mt-5">

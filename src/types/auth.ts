@@ -28,3 +28,17 @@ export interface LoginResponse {
 export interface ApiErrorResponse {
   message: string;
 }
+
+export interface ModifyUserRequest {
+  nickname: string;
+  profileImageUrl?: string;
+}
+
+export interface UploadImageResponse {
+  profileImageUrl: string;
+}
+
+export interface PasswordEditRequest {
+  password: string;
+  newPassword: string;
+}

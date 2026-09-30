@@ -9,6 +9,7 @@ type AuthStore = {
   hasHydrated: boolean;
 
   setAuth: (user: User, accessToken: string) => void;
+  updateUser: (user: User) => void;
   logout: () => void;
   setHasHydrated: (state: boolean) => void;
 };
@@ -21,6 +22,7 @@ export const useAuthStore = create<AuthStore>()(
       hasHydrated: false,
 
       setAuth: (user, accessToken) => set({ user, accessToken }),
+      updateUser: (user) => set({ user }),
       logout: () => set({ user: null, accessToken: null }),
       setHasHydrated: (state) => set({ hasHydrated: state }),
     }),

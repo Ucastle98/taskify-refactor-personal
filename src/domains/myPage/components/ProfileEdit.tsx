@@ -55,6 +55,9 @@ export default function ProfileEdit() {
         updateUser({ ...user, profileImageUrl: result.profileImageUrl });
       }
     },
+    onError: () => {
+      alert('이미지 업로드에 실패했습니다.');
+    },
   });
 
   const handleImageChgange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +71,8 @@ export default function ProfileEdit() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickName(e.target.value);
   };
+
+  const isNicknameChanged = nickname.trim() !== '' && nickname.trim() !== (user?.nickname ?? '');
 
   const NickNameMutation = useMutation({
     mutationFn: modifyMyPage,
@@ -114,6 +119,7 @@ export default function ProfileEdit() {
               이메일
               <input
                 type="text"
+                id="email"
                 className="p-4 min-w-100 border rounded-lg border-[#D9D9D0] cursor-not-allowed"
                 value={hasHydrated ? (user?.email ?? '') : ''}
                 disabled
@@ -123,6 +129,7 @@ export default function ProfileEdit() {
               닉네임
               <input
                 type="text"
+                id="nickname"
                 className="p-4 min-w-100 border rounded-lg border-[#D9D9D9] focus:border-[#5534DA] focus:outline-none"
                 value={nickname}
                 onChange={handleChange}
@@ -130,9 +137,14 @@ export default function ProfileEdit() {
             </label>
             <button
               type="submit"
-              className="bg-[#5534DA] text-white rounded-lg mt-2 p-4 hover:opacity-70"
+              disabled={!isNicknameChanged || NickNameMutation.isPending}
+              className="rounded-lg mt-2 p-4 bg-[#5534DA] text-white hover:opacity-70
+              disabled:cursor-not-allowed 
+              disabled:bg-[#D9D9D9] 
+              disabled:text-[#999999] 
+              disabled:hover:opacity-100"
             >
-              저장
+              {NickNameMutation.isPending ? '제출 중..' : '저장'}
             </button>
           </form>
         </div>

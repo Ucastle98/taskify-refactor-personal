@@ -8,6 +8,7 @@ interface ActionChipProps {
   onClick: () => void;
   label?: string;
   variant?: ActionChipVariant;
+  imageUrl?: string;
   className?: string;
   text?: string;
 }
@@ -16,7 +17,7 @@ const VARIANT_STYLES: Record<ActionChipVariant, { button: string; plus: string; 
   avatar: {
     // 마이페이지 이미지 추가 + 버튼
     button: 'w-19 h-19 rounded-xl bg-[#F1EFFD] text-[#5534DA]',
-    plus: 'text-2xl font-bold -translate-y-[1px]',
+    plus: 'text-4xl font-bold -translate-y-[1px]',
   },
   task: {
     // 할 일 생성 이미지 추가 + 버튼
@@ -37,6 +38,7 @@ export default function ActionChip({
   label,
   variant = 'task',
   className = '',
+  imageUrl,
   text,
 }: ActionChipProps) {
   const styles = VARIANT_STYLES[variant];
@@ -51,12 +53,24 @@ export default function ActionChip({
     >
       {contentText && <span className={styles.text}>{contentText}</span>}
 
-      {variant === 'column' ? (
+      {/* {variant === 'column' ? (
         <span className={`${styles.plus} group-hover:bg-gray-300`}>
           <PlusMark size={11} thickness={2} />
         </span>
       ) : (
         <span className={styles.plus}>+</span>
+      )} */}
+
+      {variant === 'avatar' && imageUrl ? (
+        <img
+          src={imageUrl}
+          alt="프로필 이미지"
+          className="h-full w-full rounded-full object-cover"
+        />
+      ) : (
+        <span className={`${styles.plus} group-hover:bg-gray-300`}>
+          <PlusMark size={14} thickness={2} />
+        </span>
       )}
     </button>
   );

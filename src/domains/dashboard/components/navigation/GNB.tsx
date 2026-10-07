@@ -40,7 +40,7 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
   };
 
   const handleGoMyPage = () => {
-    router.push('/');
+    router.push('/myPage');
   };
 
   const menuItem = [
@@ -96,8 +96,19 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
             onClick={() => setIsDropdownOpen((prev) => !prev)}
             className="flex items-center gap-2 border-l border-gray-200 pl-4 hover:opacity-60"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-400 text-xs text-white">
-              {hasHydrated ? (user?.nickname?.[0] ?? '') : ''}
+            <div className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-green-400 text-xs text-white">
+              {/* {hasHydrated ? (user?.nickname?.[0] ?? '') : ''} */}
+              {hasHydrated && user?.profileImageUrl ? (
+                <img
+                  src={user.profileImageUrl}
+                  alt="프로필 이미지"
+                  className="h-full w-full object-cover"
+                />
+              ) : hasHydrated ? (
+                (user?.nickname?.[0] ?? '')
+              ) : (
+                ''
+              )}
             </div>
             <span className="text-sm font-medium text-[#333236]">
               {hasHydrated ? user?.nickname : ''}

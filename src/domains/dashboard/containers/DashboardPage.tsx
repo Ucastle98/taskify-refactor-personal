@@ -36,6 +36,7 @@ export default function DashboardPage({ dashboardId }: Props) {
           <GNB
             title={isPending ? '' : (dashboard?.title ?? '대시보드')}
             isOwner={dashboard?.createdByMe}
+            dashboardId={dashboardId}
           />
 
           <main className="p-4">

@@ -48,14 +48,16 @@ export default function InvitedDashboardCard({ invitation }: InvitedDashboardCar
         <Button
           onClick={() => answerInviteMutation.mutate(true)}
           variant="v"
-          className="w-full md:w-18 h-8 md:h-7.5 text-xs md:text-sm font-medium hover:opacity-60"
+          disabled={answerInviteMutation.isPending}
+          className="w-full md:w-18 h-8 md:h-7.5 text-xs md:text-sm font-medium hover:opacity-60 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           수락
         </Button>
         <Button
           onClick={() => answerInviteMutation.mutate(false)}
           variant="wv"
-          className="w-full md:w-18 h-8 md:h-7.5 text-xs md:text-sm font-medium hover:opacity-60"
+          disabled={answerInviteMutation.isPending}
+          className="w-full md:w-18 h-8 md:h-7.5 text-xs md:text-sm font-medium hover:opacity-60 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           거절
         </Button>

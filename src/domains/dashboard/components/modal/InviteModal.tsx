@@ -46,15 +46,21 @@ export default function InviteModal({ open, onClose, dashboardId }: Props) {
     inviteMutation.mutate(email);
   };
 
+  const handleClose = () => {
+    if (inviteMutation.isPending) return;
+    onClose();
+  };
+
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleClose}>
       <div className="w-130 bg-white rounded-lg p-8">
         <div className="flex justify-between">
           <h2 className="font-bold text-xl">초대하기</h2>
           <button
             type="button"
-            className="text-gray-500 text-xl font-bold hover:opacity-40"
-            onClick={onClose}
+            disabled={inviteMutation.isPending}
+            className="text-gray-500 text-xl font-bold hover:opacity-40 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleClose}
           >
             X
           </button>
@@ -78,8 +84,9 @@ export default function InviteModal({ open, onClose, dashboardId }: Props) {
           <div className="flex gap-1 mt-5">
             <button
               type="button"
-              onClick={onClose}
-              className="flex-1 p-3 border rounded-lg text-gray-400 hover:bg-gray-200"
+              onClick={handleClose}
+              disabled={inviteMutation.isPending}
+              className="flex-1 p-3 border rounded-lg text-gray-400 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               취소
             </button>

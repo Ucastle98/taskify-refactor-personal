@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import DropdownMenu from '@/components/dropdown/DropdownMenu';
+import usePageToast from '@/components/toast/pagetoast/usePageToast';
 import { useAuthStore } from '@/store/useAuthStore';
 
 import InviteModal from '../modal/InviteModal';
@@ -17,9 +18,10 @@ type GNBProps = {
   title: string;
   isOwner?: boolean;
   members?: Member[];
+  dashboardId?: number;
 };
 
-export default function GNB({ title, isOwner = false, members }: GNBProps) {
+export default function GNB({ title, isOwner = false, members, dashboardId }: GNBProps) {
   const user = useAuthStore((state) => state.user);
   const hasHydrated = useAuthStore((state) => state.hasHydrated);
   const logout = useAuthStore((state) => state.logout);
@@ -30,6 +32,16 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { showToast, Toast } = usePageToast();
+
+  const handleInviteClick = () => {
+    if (dashboardId === undefined) {
+      showToast('대시보드에 입장 후 초대해주세요!');
+      return;
+    }
+    setIsOpen(true);
+  };
 
   const handleLogout = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
@@ -67,13 +79,14 @@ export default function GNB({ title, isOwner = false, members }: GNBProps) {
             관리(대시보드 수정, 계정관리)
           </button>
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleInviteClick}
             type="button"
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#787486] hover:bg-gray-200 hover:opacity-70"
           >
             초대하기
           </button>
-          <InviteModal open={isOpen} onClose={() => setIsOpen(false)} />
+          <InviteModal open={isOpen} dashboardId={dashboardId} onClose={() => setIsOpen(false)} />
+          {Toast}
         </div>
 
         {/*멤버 (대시보드 상세에서만 표시)*/}

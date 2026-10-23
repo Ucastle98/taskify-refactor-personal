@@ -59,7 +59,7 @@ export default function InvitedDashboardList({ className }: InvitedDashboardList
       )}
 
       {!isPending && !isError && invitations.length > 0 && (
-        <div className="flex flex-col mt-18 md:mt-16.75 lg:mt-24 gap-3.25 md:gap-8">
+        <div className="flex w-full flex-col mt-18 md:mt-16.75 lg:mt-24 gap-3.25 md:gap-8">
           <div className="flex justify-center">검색</div>
           <section>
             <div className="hidden md:grid grid-cols-[auto_1fr_auto] text-base text-[#9FA6B2] md:pl-7 md:pr-14">

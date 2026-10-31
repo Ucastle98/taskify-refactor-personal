@@ -5,23 +5,36 @@ import { useRouter } from 'next/navigation';
 
 import DropdownMenu from '@/components/dropdown/DropdownMenu';
 import usePageToast from '@/components/toast/pagetoast/usePageToast';
+import { getMembers } from '@/services/member';
 import { useAuthStore } from '@/store/useAuthStore';
+
+import { useQuery } from '@tanstack/react-query';
 
 import InviteModal from '../modal/InviteModal';
 
-type Member = {
-  id: number;
-  nickname: string;
-};
+// type Member = {
+//   id: number;
+//   nickname: string;
+//   profileImageUrl?: string;
+// };
 
 type GNBProps = {
   title: string;
   isOwner?: boolean;
-  members?: Member[];
   dashboardId?: number;
 };
 
-export default function GNB({ title, isOwner = false, members, dashboardId }: GNBProps) {
+const AVATAR_COLORS = [
+  'bg-yellow-400',
+  'bg-green-400',
+  'bg-blue-400',
+  'bg-purple-400',
+  'bg-orange-400',
+];
+
+const getAvatarColor = (id: number) => AVATAR_COLORS[id % AVATAR_COLORS.length];
+
+export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
   const user = useAuthStore((state) => state.user);
   const hasHydrated = useAuthStore((state) => state.hasHydrated);
   const logout = useAuthStore((state) => state.logout);
@@ -34,6 +47,18 @@ export default function GNB({ title, isOwner = false, members, dashboardId }: GN
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const { showToast, Toast } = usePageToast();
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['members', dashboardId],
+    queryFn: () => getMembers(dashboardId!),
+    enabled: dashboardId !== undefined,
+  });
+
+  const members = data?.members ?? [];
+
+  const MAX_VISIBLE = 5;
+  const visibleMembers = members.slice(0, MAX_VISIBLE);
+  const extraCount = (data?.totalCount ?? members.length) - visibleMembers.length;
 
   const handleInviteClick = () => {
     if (dashboardId === undefined) {
@@ -90,16 +115,45 @@ export default function GNB({ title, isOwner = false, members, dashboardId }: GN
         </div>
 
         {/*멤버 (대시보드 상세에서만 표시)*/}
-        {members && members.length > 0 && (
+        {isLoading && <p className="px-3 text-xs text-[#9FA6B2]">불러오는 중..</p>}
+
+        {isError && (
+          <div className="flex flex-col gap-1 px-3">
+            <p>목록을 불러오지 못했어요.</p>
+            <button
+              type="button"
+              onClick={() => refetch()}
+              className="text-left text-xs text-[#5534DA] underline"
+            >
+              다시 시도
+            </button>
+          </div>
+        )}
+
+        {members.length > 0 && (
           <div className="flex items-center -space-x-2">
-            {members.map((member) => (
+            {visibleMembers.map((member) => (
               <div
                 key={member.id}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-400 text-xs text-white"
+                className={`flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border-2 border-white text-xs text-white ${getAvatarColor(member.id)}`}
               >
-                {member.nickname[0]}
+                {member.profileImageUrl ? (
+                  <img
+                    src={member.profileImageUrl}
+                    alt={member.nickname}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  member.nickname[0]
+                )}
               </div>
             ))}
+
+            {extraCount > 0 && (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-gray-300 text-xs text-gray-700">
+                +{extraCount}
+              </div>
+            )}
           </div>
         )}
 
@@ -109,7 +163,11 @@ export default function GNB({ title, isOwner = false, members, dashboardId }: GN
             onClick={() => setIsDropdownOpen((prev) => !prev)}
             className="flex items-center gap-2 border-l border-gray-200 pl-4 hover:opacity-60"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-green-400 text-xs text-white">
+            <div
+              className={`flex h-8 w-8 items-center justify-center rounded-full overflow-hidden text-xs text-white "
+               ${user ? getAvatarColor(user.id) : 'bg-green-400'}
+              `}
+            >
               {/* {hasHydrated ? (user?.nickname?.[0] ?? '') : ''} */}
               {hasHydrated && user?.profileImageUrl ? (
                 <img

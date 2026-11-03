@@ -34,6 +34,9 @@ const AVATAR_COLORS = [
 
 const getAvatarColor = (id: number) => AVATAR_COLORS[id % AVATAR_COLORS.length];
 
+// 닉네임에 이모지가 들어있을때를 대비 "😀안녕" => ["😀","안","녕"] 안깨지게 꺼내줌
+const getInitial = (nickname: string) => Array.from(nickname)[0] ?? '';
+
 export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
   const user = useAuthStore((state) => state.user);
   const hasHydrated = useAuthStore((state) => state.hasHydrated);
@@ -135,16 +138,14 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
             {visibleMembers.map((member) => (
               <div
                 key={member.id}
-                className={`flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border-2 border-white text-xs text-white ${getAvatarColor(member.id)}`}
+                role="img"
+                aria-label={member.nickname}
+                className={`flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border-2 border-white text-xs text-white ${getAvatarColor(member.userId)}`}
               >
                 {member.profileImageUrl ? (
-                  <img
-                    src={member.profileImageUrl}
-                    alt={member.nickname}
-                    className="h-full w-full object-cover"
-                  />
+                  <img src={member.profileImageUrl} alt="" className="h-full w-full object-cover" />
                 ) : (
-                  member.nickname[0]
+                  getInitial(member.nickname)
                 )}
               </div>
             ))}
@@ -164,9 +165,7 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
             className="flex items-center gap-2 border-l border-gray-200 pl-4 hover:opacity-60"
           >
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full overflow-hidden text-xs text-white "
-               ${user ? getAvatarColor(user.id) : 'bg-green-400'}
-              `}
+              className={`flex h-8 w-8 items-center justify-center rounded-full overflow-hidden text-xs text-white ${hasHydrated && user ? getAvatarColor(user.id) : 'bg-gray-300'}`}
             >
               {/* {hasHydrated ? (user?.nickname?.[0] ?? '') : ''} */}
               {hasHydrated && user?.profileImageUrl ? (
@@ -176,7 +175,7 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
                   className="h-full w-full object-cover"
                 />
               ) : hasHydrated ? (
-                (user?.nickname?.[0] ?? '')
+                getInitial(user?.nickname ?? '')
               ) : (
                 ''
               )}

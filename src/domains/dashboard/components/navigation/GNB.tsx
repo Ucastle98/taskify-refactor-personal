@@ -5,10 +5,12 @@ import { useRouter } from 'next/navigation';
 
 import DropdownMenu from '@/components/dropdown/DropdownMenu';
 import usePageToast from '@/components/toast/pagetoast/usePageToast';
+import { getAxiosErrorMessage } from '@/lib/getAxiosErrorMessage';
+import { deleteDashboard } from '@/services/dashboard';
 import { getMembers } from '@/services/member';
 import { useAuthStore } from '@/store/useAuthStore';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import InviteModal from '../modal/InviteModal';
 
@@ -45,16 +47,31 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
   const router = useRouter();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const ManageDropdownRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isManageDropdownOpen, setIsManageDropdownOpen] = useState(false);
 
   const { showToast, Toast } = usePageToast();
+
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['members', dashboardId],
     queryFn: () => getMembers(dashboardId!),
     enabled: dashboardId !== undefined,
+  });
+
+  const dashboardDeleteMutation = useMutation({
+    mutationFn: () => deleteDashboard(dashboardId!),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+      router.push('/myDashboard');
+    },
+    onError: (error) => {
+      alert(getAxiosErrorMessage(error, '대시보드 삭제에 실패했습니다.'));
+    },
   });
 
   const members = data?.members ?? [];
@@ -71,6 +88,20 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
     setIsOpen(true);
   };
 
+  const handleManageClick = () => {
+    if (dashboardId === undefined) {
+      showToast('대시보드에 입장 후 이용해주세요!');
+      return;
+    }
+
+    if (!isOwner) {
+      showToast('내가 만든 대시보드에서만 관리할 수 있어요!');
+      return;
+    }
+
+    setIsManageDropdownOpen((prev) => !prev);
+  };
+
   const handleLogout = () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
       logout();
@@ -79,13 +110,29 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
     }
   };
 
+  const handleDelete = () => {
+    if (dashboardDeleteMutation.isPending) return;
+    if (!window.confirm('삭제 후 복구가 불가능합니다. 삭제 하시겠습니까?')) return;
+    dashboardDeleteMutation.mutate();
+  };
+
   const handleGoMyPage = () => {
     router.push('/myPage');
   };
 
+  const handleModify = () => {};
+
+  //  멤버 확인 -> 멤버 보이는 모달 그 안에서 멤버 강퇴 기능
+
   const menuItem = [
     { label: '로그아웃', onClick: handleLogout },
     { label: '계정관리', onClick: handleGoMyPage },
+  ];
+
+  const manageMenuItem = [
+    { label: '삭제하기', onClick: handleDelete },
+    { label: '수정하기', onClick: handleModify },
+    // { label: '멤버 확인', onClick: },
   ];
 
   return (
@@ -100,12 +147,22 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
       <div className="flex items-center gap-6">
         {/* 버튼 영역(추후 공통컴포넌트로 제작) */}
         <div className="flex items-center gap-4">
-          <button
-            type="button"
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#787486] hover:bg-gray-200 hover:opacity-70"
-          >
-            관리(대시보드 수정, 계정관리)
-          </button>
+          <div className="relative" ref={ManageDropdownRef}>
+            <button
+              type="button"
+              onClick={handleManageClick}
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-[#787486] hover:bg-gray-200 hover:opacity-70"
+            >
+              대시보드 관리
+            </button>
+            <DropdownMenu
+              items={manageMenuItem}
+              open={isManageDropdownOpen}
+              onClose={() => setIsManageDropdownOpen(false)}
+              menuRef={ManageDropdownRef}
+            />
+          </div>
+
           <button
             onClick={handleInviteClick}
             type="button"

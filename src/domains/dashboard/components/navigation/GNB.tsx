@@ -66,7 +66,7 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
   const dashboardDeleteMutation = useMutation({
     mutationFn: () => deleteDashboard(dashboardId!),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboards'] });
       router.push('/myDashboard');
     },
     onError: (error) => {
@@ -120,7 +120,9 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
     router.push('/myPage');
   };
 
-  const handleModify = () => {};
+  const handleModify = () => {
+    alert('구현 중...');
+  };
 
   //  멤버 확인 -> 멤버 보이는 모달 그 안에서 멤버 강퇴 기능
 

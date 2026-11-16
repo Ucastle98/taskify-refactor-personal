@@ -51,7 +51,7 @@ export default function DropdownMenu({ open, onClose, items, menuRef }: Dropdown
   if (!open) return null;
 
   return (
-    <div className="absolute mt-1 w-23.25 h-20.5 border border-gray-300 rounded-lg bg-white">
+    <div className="absolute z-50 mt-1 w-23.25 h-20.5 border border-gray-300 rounded-lg bg-white">
       <div className="flex flex-col items-center">
         {items?.map((item) => (
           <div key={item.label}>

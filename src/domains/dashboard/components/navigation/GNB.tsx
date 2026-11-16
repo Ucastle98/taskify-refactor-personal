@@ -67,6 +67,7 @@ export default function GNB({ title, isOwner = false, dashboardId }: GNBProps) {
     mutationFn: () => deleteDashboard(dashboardId!),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboards'] });
+      queryClient.removeQueries({ queryKey: ['dashboard', dashboardId] });
       router.push('/myDashboard');
     },
     onError: (error) => {
